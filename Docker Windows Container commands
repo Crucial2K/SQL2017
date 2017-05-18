@@ -10,5 +10,12 @@ docker run -d -p 1433:1433 -e sa_password=<SA_PASSWORD> -e ACCEPT_EULA=Y microso
 # The following example shows all parameters in action:
 docker run -d -p 1433:1433 -e sa_password=<SA_PASSWORD> -e ACCEPT_EULA=Y -v C:/temp/:C:/temp/ -e attach_dbs="[{'dbName':'SampleDb','dbFiles':['C:\\temp\\sampledb.mdf','C:\\temp\\sampledb_log.ldf']}]" microsoft/mssql-server-windows
 
-# Connect to docker db
+# Connect to docker db using SSMS
 https://blogs.technet.microsoft.com/dataplatforminsider/2016/10/13/sql-server-2016-express-edition-in-windows-containers/
+
+# Get the local IP of the container
+docker ps # get the container ID and put it at the end of the next command
+docker inspect -format='{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' 0f82b98d392a
+
+# Result
+ormat='192.168.53.114'
