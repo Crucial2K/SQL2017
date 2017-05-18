@@ -3,8 +3,8 @@
 # Pull down latest image 
 docker pull microsoft/mssql-server-windows
 
-# Start a mssql server instance
-docker run -d -p 1433:1433 -e sa_password=<SA_PASSWORD> -e ACCEPT_EULA=Y microsoft/mssql-server-windows
+# Start a mssql server instance, use --env to set the password for sa on startup
+docker run -d -p 1433:1433 --env sa_password=password -e ACCEPT_EULA=Y microsoft/mssql-server-windows 
 
 # attach_dbs (optional parameter): The configuration for attaching custom DBs (.mdf, .ldf files). 
 # The following example shows all parameters in action:
