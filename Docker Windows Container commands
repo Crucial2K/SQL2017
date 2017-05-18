@@ -1,0 +1,13 @@
+#Docker Windows Container commands
+
+```
+# Pull down latest image 
+docker pull microsoft/mssql-server-windows
+
+# Start a mssql server instance
+docker run -d -p 1433:1433 -e sa_password=<SA_PASSWORD> -e ACCEPT_EULA=Y microsoft/mssql-server-windows
+
+# attach_dbs (optional parameter): The configuration for attaching custom DBs (.mdf, .ldf files). 
+# The following example shows all parameters in action:
+docker run -d -p 1433:1433 -e sa_password=<SA_PASSWORD> -e ACCEPT_EULA=Y -v C:/temp/:C:/temp/ -e attach_dbs="[{'dbName':'SampleDb','dbFiles':['C:\\temp\\sampledb.mdf','C:\\temp\\sampledb_log.ldf']}]" microsoft/mssql-server-windows
+```
