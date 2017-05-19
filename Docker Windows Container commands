@@ -19,3 +19,45 @@ docker inspect -format='{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'
 
 # Result
 ormat='192.168.53.114'
+
+By default the SQL Server Agent will not manangeable in SSMS. To enable this run
+
+/* Enable Agent XPs*/
+
+-- Advanced options needs to be enabled first
+EXEC SP_CONFIGURE 'show advanced options',1
+GO
+RECONFIGURE
+GO
+EXEC SP_CONFIGURE 'show advanced options'
+
+-- Enable Agent Xps
+exec sp_configure 'Agent XPs', 1
+go 
+reconfigure
+
+-- Now restart SQL Agent service. This is done by connecting to the container using CMD
+
+docker exec -it a58ec2d666e9 "cmd"
+-- Which will open a command prompt
+
+-- If you have forgotton the exact name of the SQL Agent, run this at the command prompt
+sc queryex type= service state= all | find /i "sql"
+
+Which will bring back a list:
+
+SERVICE_NAME: MSSQLSERVER
+DISPLAY_NAME: SQL Server (MSSQLSERVER)
+SERVICE_NAME: SQLBrowser
+DISPLAY_NAME: SQL Server Browser
+SERVICE_NAME: SQLSERVERAGENT
+DISPLAY_NAME: SQL Server Agent (MSSQLSERVER)
+SERVICE_NAME: SQLTELEMETRY
+DISPLAY_NAME: SQL Server CEIP service (MSSQLSERVER)
+SERVICE_NAME: SQLWriter
+DISPLAY_NAME: SQL Server VSS Writer
+
+-- Now type 
+net start "SQL Server Agent (MSSQLSERVER)"
+
+
